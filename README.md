@@ -1,6 +1,6 @@
 # WalletConnect RPCs dApp
 
-This is a dApp for testing the Chia wallet's WalletConnect commands.
+This is a dApp for testing Sage's WalletConnect commands.
 
 ## Setup
 
