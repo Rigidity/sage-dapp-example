@@ -23,6 +23,8 @@ export function useRpcUi() {
     const [publicKey, setPublicKey] = useState('');
     const [message, setMessage] = useState('');
     const [spendBundle, setSpendBundle] = useState('');
+    const [offer, setOffer] = useState('');
+    const [createOfferJson, setCreateOfferJson] = useState('');
 
     function handlePromise(promise: Promise<any>) {
         promise
@@ -119,6 +121,20 @@ export function useRpcUi() {
             submitButton('Send Transaction', () =>
                 rpc.sendTransaction({ spendBundle: JSON.parse(spendBundle) }),
             ),
+        ],
+        chia_createOffer: [
+            stringOption(
+                'Create Offer Json',
+                createOfferJson,
+                setCreateOfferJson,
+            ),
+            submitButton('Create Offer', () =>
+                rpc.createOffer(JSON.parse(createOfferJson)),
+            ),
+        ],
+        chia_takeOffer: [
+            stringOption('Offer', offer, setOffer),
+            submitButton('Take Offer', () => rpc.takeOffer({ offer })),
         ],
     };
 

@@ -11,6 +11,9 @@ export enum SageMethod {
     SignCoinSpends = 'chip0002_signCoinSpends',
     SignMessage = 'chip0002_signMessage',
     SendTransaction = 'chip0002_sendTransaction',
+    Transfer = 'chia_transfer',
+    TakeOffer = 'chia_takeOffer',
+    CreateOffer = 'chia_createOffer',
 }
 
 export const REQUIRED_NAMESPACES: ProposalTypes.RequiredNamespaces = {

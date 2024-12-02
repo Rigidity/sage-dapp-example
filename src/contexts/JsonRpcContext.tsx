@@ -52,6 +52,8 @@ interface JsonRpc {
     sendTransaction: (
         data: any,
     ) => Promise<{ status: number; error: string | null }>;
+    createOffer: (data: any) => Promise<{ offer: string; id: string }>;
+    takeOffer: (data: { offer: string }) => Promise<{ id: string }>;
 }
 
 export const JsonRpcContext = createContext<JsonRpc>({} as JsonRpc);
@@ -92,6 +94,8 @@ export function JsonRpcProvider({ children }: PropsWithChildren) {
                 signMessage: (data) => request(SageMethod.SignMessage, data),
                 sendTransaction: (data) =>
                     request(SageMethod.SendTransaction, data),
+                createOffer: (data) => request(SageMethod.CreateOffer, data),
+                takeOffer: (data) => request(SageMethod.TakeOffer, data),
             }}
         >
             {children}
