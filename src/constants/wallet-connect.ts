@@ -14,6 +14,9 @@ export enum SageMethod {
     Transfer = 'chia_transfer',
     TakeOffer = 'chia_takeOffer',
     CreateOffer = 'chia_createOffer',
+    GetNfts = 'chia_getNfts',
+    Send = 'chia_send',
+    GetAddress = 'chia_getAddress',
 }
 
 export const REQUIRED_NAMESPACES: ProposalTypes.RequiredNamespaces = {

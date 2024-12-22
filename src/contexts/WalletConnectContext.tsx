@@ -67,7 +67,7 @@ export function WalletConnectProvider({
     }, []);
 
     const connect = useCallback(
-        async (pairing: any) => {
+        async (pairing?: { topic: string }) => {
             if (!client) throw new Error('WalletConnect is not initialized');
             if (!web3Modal) throw new Error('Web3Modal is not initialized');
 
@@ -91,7 +91,7 @@ export function WalletConnectProvider({
                 web3Modal.closeModal();
             }
         },
-        [client, onSessionConnected]
+        [client, onSessionConnected, web3Modal]
     );
 
     const disconnect = useCallback(async () => {
@@ -171,7 +171,7 @@ export function WalletConnectProvider({
         } finally {
             setIsInitializing(false);
         }
-    }, [checkPersistedState, subscribeToEvents]);
+    }, [checkPersistedState, subscribeToEvents, chainId, projectId, relayUrl]);
 
     useEffect(() => {
         if (!client) createClient();

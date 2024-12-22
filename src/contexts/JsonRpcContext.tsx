@@ -21,6 +21,28 @@ interface SpendableCoin {
     } | null;
 }
 
+interface Nft {
+    launcherId: string;
+    collectionId: string | null;
+    collectionName: string | null;
+    minterDid: string | null;
+    ownerDid: string | null;
+    name: string | null;
+    createdHeight: number | null;
+    coinId: string;
+    puzzleHash: string;
+    royaltyPuzzleHash: string;
+    royaltyTenThousandths: number;
+    dataUris: string[];
+    dataHash: string | null;
+    metadataUris: string[];
+    metadataHash: string | null;
+    licenseUris: string[];
+    licenseHash: string | null;
+    editionNumber: number | null;
+    editionTotal: number | null;
+}
+
 interface JsonRpc {
     chainId: (data: Empty) => Promise<string>;
     connect: (data?: { eager?: boolean }) => Promise<boolean>;
@@ -44,16 +66,29 @@ interface JsonRpc {
         confirmed: number;
         spendableCoinCount: number;
     }>;
-    signCoinSpends: (data: any) => Promise<string>;
+    signCoinSpends: (data: unknown) => Promise<string>;
     signMessage: (data: {
         publicKey: string;
         message: string;
     }) => Promise<string>;
     sendTransaction: (
-        data: any,
+        data: unknown
     ) => Promise<{ status: number; error: string | null }>;
-    createOffer: (data: any) => Promise<{ offer: string; id: string }>;
+    createOffer: (data: unknown) => Promise<{ offer: string; id: string }>;
     takeOffer: (data: { offer: string }) => Promise<{ id: string }>;
+    getNfts: (data: {
+        collectionId?: string;
+        offset: number | null;
+        limit: number | null;
+    }) => Promise<{ nfts: Nft[] }>;
+    send: (data: {
+        assetId?: string;
+        amount: number | string;
+        fee?: number | string;
+        address: string;
+        memos?: string[];
+    }) => Promise<Empty>;
+    getAddress: (data: Empty) => Promise<{ address: string }>;
 }
 
 export const JsonRpcContext = createContext<JsonRpc>({} as JsonRpc);
@@ -61,13 +96,13 @@ export const JsonRpcContext = createContext<JsonRpc>({} as JsonRpc);
 export function JsonRpcProvider({ children }: PropsWithChildren) {
     const { client, session, chainId, fingerprint } = useWalletConnect();
 
-    async function request<T>(method: SageMethod, data: any): Promise<T> {
+    async function request<T>(method: SageMethod, data: unknown): Promise<T> {
         if (!client) throw new Error('WalletConnect is not initialized');
         if (!session) throw new Error('Session is not connected');
         if (!fingerprint) throw new Error('Fingerprint is not loaded.');
 
         return await client?.request<T>({
-            topic: session!.topic,
+            topic: session.topic,
             chainId,
             request: {
                 method,
@@ -96,6 +131,9 @@ export function JsonRpcProvider({ children }: PropsWithChildren) {
                     request(SageMethod.SendTransaction, data),
                 createOffer: (data) => request(SageMethod.CreateOffer, data),
                 takeOffer: (data) => request(SageMethod.TakeOffer, data),
+                getNfts: (data) => request(SageMethod.GetNfts, data),
+                send: (data) => request(SageMethod.Send, data),
+                getAddress: (data) => request(SageMethod.GetAddress, data),
             }}
         >
             {children}
@@ -108,7 +146,7 @@ export function useJsonRpc() {
 
     if (!context)
         throw new Error(
-            'Calls to `useJsonRpc` must be used within a `JsonRpcProvider`.',
+            'Calls to `useJsonRpc` must be used within a `JsonRpcProvider`.'
         );
 
     return context;
