@@ -24,6 +24,7 @@ export function useRpcUi() {
     const [message, setMessage] = useState('');
     const [spendBundle, setSpendBundle] = useState('');
     const [offer, setOffer] = useState('');
+    const [offerId, setOfferId] = useState('');
     const [createOfferJson, setCreateOfferJson] = useState('');
     const [collectionId, setCollectionId] = useState('');
     const [address, setAddress] = useState('');
@@ -153,6 +154,12 @@ export function useRpcUi() {
         chia_takeOffer: [
             stringOption('Offer', offer, setOffer),
             submitButton('Take Offer', () => rpc.takeOffer({ offer })),
+        ],
+        chia_cancelOffer: [
+            stringOption('Offer Id', offerId, setOfferId),
+            submitButton('Cancel Offer', () =>
+                rpc.cancelOffer({ id: offerId })
+            ),
         ],
         chia_getNfts: [
             numberOption('Offset', offset, setOffset),

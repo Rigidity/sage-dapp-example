@@ -76,6 +76,7 @@ interface JsonRpc {
     ) => Promise<{ status: number; error: string | null }>;
     createOffer: (data: unknown) => Promise<{ offer: string; id: string }>;
     takeOffer: (data: { offer: string }) => Promise<{ id: string }>;
+    cancelOffer: (data: { id: string }) => Promise<Empty>;
     getNfts: (data: {
         collectionId?: string;
         offset: number | null;
@@ -131,6 +132,7 @@ export function JsonRpcProvider({ children }: PropsWithChildren) {
                     request(SageMethod.SendTransaction, data),
                 createOffer: (data) => request(SageMethod.CreateOffer, data),
                 takeOffer: (data) => request(SageMethod.TakeOffer, data),
+                cancelOffer: (data) => request(SageMethod.CancelOffer, data),
                 getNfts: (data) => request(SageMethod.GetNfts, data),
                 send: (data) => request(SageMethod.Send, data),
                 getAddress: (data) => request(SageMethod.GetAddress, data),
