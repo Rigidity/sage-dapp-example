@@ -14,6 +14,7 @@ export enum SageMethod {
     Transfer = 'chia_transfer',
     TakeOffer = 'chia_takeOffer',
     CreateOffer = 'chia_createOffer',
+    CancelOffer = 'chia_cancelOffer',
     GetNfts = 'chia_getNfts',
     Send = 'chia_send',
     GetAddress = 'chia_getAddress',
