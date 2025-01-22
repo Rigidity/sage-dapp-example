@@ -90,6 +90,10 @@ interface JsonRpc {
         memos?: string[];
     }) => Promise<Empty>;
     getAddress: (data: Empty) => Promise<{ address: string }>;
+    signMessageByAddress: (data: {
+        message: string;
+        address: string;
+    }) => Promise<{ publicKey: string; signature: string }>;
 }
 
 export const JsonRpcContext = createContext<JsonRpc>({} as JsonRpc);
@@ -136,6 +140,8 @@ export function JsonRpcProvider({ children }: PropsWithChildren) {
                 getNfts: (data) => request(SageMethod.GetNfts, data),
                 send: (data) => request(SageMethod.Send, data),
                 getAddress: (data) => request(SageMethod.GetAddress, data),
+                signMessageByAddress: (data) =>
+                    request(SageMethod.SignMessageByAddress, data),
             }}
         >
             {children}

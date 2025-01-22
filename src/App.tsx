@@ -46,20 +46,20 @@ export default function Home() {
 
                     <Typography variant='body1' mt={2}>
                         Before you can test out the WalletConnect commands, you
-                        will need to link the Chia wallet to this site. You can
+                        will need to link Sage wallet to this site. You can
                         download the latest version of the wallet on the{' '}
-                        <Link href='https://www.chia.net/downloads'>
-                            official download page
+                        <Link href='https://github.com/xch-dev/sage'>
+                            official GitHub page
                         </Link>
                         .
                     </Typography>
 
                     <Typography variant='body1' mt={2}>
                         Once you have downloaded and started the wallet, make
-                        sure it has completed syncing before connecting it. The
-                        WalletConnect menu can be found on the top right corner
-                        of the wallet. Click the button below to begin the
-                        connection.
+                        sure it has completed syncing before connecting it. Also
+                        make sure you're on the correct network in settings (by
+                        default testnet11). WalletConnect can be found in
+                        settings and can be linked with the button below.
                     </Typography>
 
                     <Button
