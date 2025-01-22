@@ -195,6 +195,13 @@ export function useRpcUi() {
         chia_getAddress: [
             submitButton('Get Address', () => rpc.getAddress({})),
         ],
+        chia_signMessageByAddress: [
+            stringOption('Address', address, setAddress),
+            stringOption('Message', message, setMessage),
+            submitButton('Sign Message By Address', () =>
+                rpc.signMessageByAddress({ address, message })
+            ),
+        ],
     };
 
     return { commands, responseData };

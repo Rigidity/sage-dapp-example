@@ -18,6 +18,7 @@ export enum SageMethod {
     GetNfts = 'chia_getNfts',
     Send = 'chia_send',
     GetAddress = 'chia_getAddress',
+    SignMessageByAddress = 'chia_signMessageByAddress',
 }
 
 export const REQUIRED_NAMESPACES: ProposalTypes.RequiredNamespaces = {
