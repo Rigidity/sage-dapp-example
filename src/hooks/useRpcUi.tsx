@@ -31,6 +31,8 @@ export function useRpcUi() {
     const [amount, setAmount] = useState(0);
     const [fee, setFee] = useState(0);
     const [memos, setMemos] = useState('');
+    const [did, setDid] = useState('');
+
     function handlePromise(promise: Promise<unknown>) {
         promise
             .then((data) => {
@@ -200,6 +202,17 @@ export function useRpcUi() {
             stringOption('Message', message, setMessage),
             submitButton('Sign Message By Address', () =>
                 rpc.signMessageByAddress({ address, message })
+            ),
+        ],
+        chia_bulkMintNfts: [
+            stringOption('DID', did, setDid),
+            numberOption('Fee', fee, setFee),
+            submitButton('Bulk Mint Nfts', () =>
+                rpc.bulkMintNfts({
+                    did,
+                    nfts: [{}, {}, {}],
+                    fee,
+                })
             ),
         ],
     };

@@ -94,6 +94,7 @@ interface JsonRpc {
         message: string;
         address: string;
     }) => Promise<{ publicKey: string; signature: string }>;
+    bulkMintNfts: (data: unknown) => Promise<{ nftIds: string[] }>;
 }
 
 export const JsonRpcContext = createContext<JsonRpc>({} as JsonRpc);
@@ -142,6 +143,7 @@ export function JsonRpcProvider({ children }: PropsWithChildren) {
                 getAddress: (data) => request(SageMethod.GetAddress, data),
                 signMessageByAddress: (data) =>
                     request(SageMethod.SignMessageByAddress, data),
+                bulkMintNfts: (data) => request(SageMethod.BulkMintNfts, data),
             }}
         >
             {children}
